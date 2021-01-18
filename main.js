@@ -10,12 +10,67 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-
 const pigLatin = (word) => {
+  let cleanWord = word.trim().toLowerCase();
 
-  // Your code here
+  let translation = "";
+  
+  let smallestNonNegative = (num1,num2) => {
+    //if num1 is negative, return num2
+      if(num1 < 0){
+        return num2;
+      }
+    // if num2 is negative, return num1
+      if(num2 < 0){
+        return num1;
+      }
+    //otherwise, return the smaller of the two
+      if(num1 < num2){
+        return num1;
+      } else{
+        return num2;
+      }
+    }
 
+    let indexOfFirstVowel = (word) =>{
+      let vowelIndex = -1; //to set as default
+
+      //indexOf --> finds where the character appears is in the word.. in this case vowels
+      //indexOf will give us the position of the vowel in a numeric value
+      const aIndex = word.indexOf("a");
+      const eIndex = word.indexOf("e");
+      const iIndex = word.indexOf("i");
+      const oIndex = word.indexOf("o");
+      const uIndex = word.indexOf("u");
+   
+
+      //reasigning the vale of the variable vowelIndex
+     vowelIndex = smallestNonNegative(vowelIndex, aIndex);
+     vowelIndex = smallestNonNegative(vowelIndex, eIndex);
+     vowelIndex = smallestNonNegative(vowelIndex, iIndex);
+     vowelIndex = smallestNonNegative(vowelIndex, oIndex);
+     vowelIndex = smallestNonNegative(vowelIndex, uIndex);
+     
+     return vowelIndex;
+    }
+// we create a variable named vowel which equals indexOfFirstVowel with cleanWord passed into it
+    let vowel = indexOfFirstVowel(cleanWord);
+
+  // part one: if word begins with a vowel
+  if(vowel == 0){
+    translation = cleanWord + "yay";
+
+    return translation;
+  } 
+   //second part: if the word doesnt start with a vowel
+  else{
+    //.substring helps to separate the word from where the first vowel is found
+    translation = cleanWord.substring(vowel) + cleanWord.substring(0,vowel) + "ay";
+
+    return translation;
+  } 
 }
+
 
 // the first function called in the program to get an input from the user
 // to run the function use the command: node main.js
@@ -67,5 +122,38 @@ if (typeof describe === 'function') {
 
 // break your code into pieces and focus on one piece at a time...
 // 1. if word begins with a vowel send to one function: adds "yay"
+
+/** 
+ * 0 1 2
+ * e g g
+ * if veowl is index 0 then add "yay"
+ * 
+ * if indexOfFirstVowel is 0 -> concat "yay"
+ * return word + "yay"
+ * 
+ * 
+ * if indexOfFristVowel > 0
+ *  0 1 2
+ *  c a r
+ * 
+ * vowel is 1
+ * 
+ * .substring(indexOfFristVowel) 
+ * 
+ * which will return
+ * 
+ * c
+ * ar
+ * 
+ * create new variable that holds the two sets of letters
+ * 
+ * move it to the end and concat and add "ay"
+ * 
+ * 
+ * 
+ */
+
 // 2. if word begins in with a consonant send to another function: splices off beginning, returns word with new ending.
 // 3. if multiple words, create array of words, loop over them, sending them to different functions and creating a new array with the new words.
+
+
